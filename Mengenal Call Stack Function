@@ -1,72 +1,82 @@
-Mengenal Call Stack Function
+Faktanya Javascript Itu Single Thread
 
-=================================
+==============================================
 
-https://pythontutor.com/render.html#mode=display
+Secara sederhana, single-thread dalam konteks pemrograman berarti bahwa program hanya memiliki satu alur eksekusi (thread) pada waktu tertentu.
 
-Buat 2 file index.html dan app.js
+1. Contoh menggunakan Callback:
 
-index.html :
+// Fungsi simulasi operasi asinkron
+function fetchData(callback) {
+	setTimeout(() => {
+	  const data = { id: 1, name: 'John Doe' };
+	  callback(data);
+	}, 2000);
+  }
+  
+  // Pemanggilan fungsi asinkron
+  console.log('Memulai pengambilan data...');
+  fetchData((data) => {
+	console.log('Data yang diterima:', data);
+  });
+  console.log('Selesai pemanggilan fungsi');
 
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Asynchronous JavaScript</title>
-	</head>
-	<body>
-		<script src="app.js"></script>
-	</body>
-</html>
+===========================================================
 
-==========================
+Contoh menggunakan Promise:
 
-
-app.js  :
-
-
-const hello = async () => {
-	// throw 'Maaf gak kenal';
-	return 'Hello World';
-};
-
-hello()
-	.then((res) => {
-		console.log('response', res);
+// Fungsi simulasi operasi asinkron
+function fetchData() {
+	return new Promise((resolve, reject) => {
+	  setTimeout(() => {
+		const data = { id: 1, name: 'John Doe' };
+		resolve(data);
+	  }, 2000);
+	});
+  }
+  
+  // Pemanggilan fungsi asinkron
+  console.log('Memulai pengambilan data...');
+  fetchData()
+	.then((data) => {
+	  console.log('Data yang diterima:', data);
 	})
-	.catch((err) => {
-		console.log('error', err);
+	.catch((error) => {
+	  console.error('Terjadi kesalahan:', error);
+	})
+	.finally(() => {
+	  console.log('Selesai pemanggilan fungsi');
 	});
 
+============================================================
 
-========================================
+Contoh menggunakan Async/Await:
 
-contoh lain :
-
-function multiply(a, b) {
-  return a * b;
+// Fungsi simulasi operasi asinkron
+function fetchData() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const data = { id: 1, name: 'John Doe' };
+      resolve(data);
+    }, 2000);
+  });
 }
 
-function square(a) {
-  return multiply(a, a);
+// Fungsi asinkron menggunakan Async/Await
+async function processData() {
+  console.log('Memulai pengambilan data...');
+  try {
+    const data = await fetchData();
+    console.log('Data yang diterima:', data);
+  } catch (error) {
+    console.error('Terjadi kesalahan:', error);
+  } finally {
+    console.log('Selesai pemanggilan fungsi');
+  }
 }
 
-function main() {
-  const result = square(5);
-  console.log(result);
-}
+processData();
 
-main();
 
-=================================
+==========================================================
 
-Fungsi main() dipanggil, lalu ditambahkan ke atas stack.
-Fungsi square(5) dipanggil, lalu ditambahkan ke atas stack.
-Fungsi multiply(5, 5) dipanggil, lalu ditambahkan ke atas stack.
-Fungsi multiply(5, 5) selesai dijalankan, lalu dihapus dari stack.
-Fungsi square(5) selesai dijalankan, lalu dihapus dari stack.
-Fungsi main() selesai dijalankan, lalu dihapus dari stack.
-
-====================================
