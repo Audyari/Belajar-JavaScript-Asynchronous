@@ -1,37 +1,51 @@
-Callback Hell Di Javascript Bikin Serem Dibacanya
+Latihan Request Pakai Callback Function
 
-=====================================================
+=================================================
 
-contoh code serhana :
+buat app .js panggil nya pake node app.js
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ubah Warna Body Otomatis</title>
-    <style>
-      body {
-        transition: background-color 0.5s ease;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Warna latar belakang akan berubah setiap 3 detik</h1>
+// Fungsi untuk melakukan request data
+function fetchData(callback) {
+	// Simulasi delay untuk request data
+	setTimeout(() => {
+	  const data = {
+		name: 'John Doe',
+		age: 30,
+		email: 'john.doe@example.com'
+	  };
+  
+	  // Memanggil callback function dengan data yang diperoleh
+	  callback(data);
+	}, 2000); // Delay selama 2 detik
+  }
+  
+  // Fungsi callback untuk menangani data yang diterima
+  function handleData(data) {
+	console.log('Data yang diterima:', data);
+  }
+  
+  // Memanggil fungsi fetchData dan memberikan handleData sebagai callback
+  console.log('Memulai request data...');
+  fetchData(handleData);
+  console.log('Request data sedang diproses...');
 
-    <script>
-      function changeBodyColor() {
-        const randomColor =
-          "#" + Math.floor(Math.random() * 16777215).toString(16);
-        document.body.style.backgroundColor = randomColor;
-        console.log("Warna latar belakang diubah menjadi:", randomColor);
-      }
+===========================================================
 
-      // Mengubah warna latar belakang setiap 3 detik
-      setInterval(changeBodyColor, 3000);
-    </script>
-  </body>
-</html>
+1. console.log('Memulai request data...');
+Baris ini akan dijalankan terlebih dahulu, dan akan menampilkan pesan "Memulai request data..." di konsol.
+
+2. fetchData(handleData);
+Fungsi fetchData() dipanggil dengan handleData sebagai callback function.
+Pada saat fetchData() dipanggil, proses request data dimulai.
+Namun, karena fetchData() menggunakan setTimeout() untuk menunda eksekusi selama 2 detik, fungsi fetchData() tidak akan selesai dengan segera.
+
+3. console.log('Request data sedang diproses...');
+
+4. Setelah fetchData() dipanggil, baris ini akan dijalankan dan akan menampilkan pesan "Request data sedang diproses..." di konsol.
+Setelah 2 detik (delay yang ditetapkan dalam setTimeout()), proses request data selesai.
+Pada saat ini, callback(data) di dalam fetchData() akan dipanggil.
+Callback function handleData(data) yang diberikan saat memanggil fetchData() akan dijalankan.
+Di dalam handleData(data), data yang diterima akan ditampilkan di konsol dengan pesan "Data yang diterima: { name: 'John Doe', age: 30, email: 'john.doe@example.com' }".
 
 
-=========================================================
+======================================================
