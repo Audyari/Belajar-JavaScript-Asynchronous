@@ -40,3 +40,31 @@ hello()
 
 
 ========================================
+
+contoh lain :
+
+function multiply(a, b) {
+  return a * b;
+}
+
+function square(a) {
+  return multiply(a, a);
+}
+
+function main() {
+  const result = square(5);
+  console.log(result);
+}
+
+main();
+
+=================================
+
+Fungsi main() dipanggil, lalu ditambahkan ke atas stack.
+Fungsi square(5) dipanggil, lalu ditambahkan ke atas stack.
+Fungsi multiply(5, 5) dipanggil, lalu ditambahkan ke atas stack.
+Fungsi multiply(5, 5) selesai dijalankan, lalu dihapus dari stack.
+Fungsi square(5) selesai dijalankan, lalu dihapus dari stack.
+Fungsi main() selesai dijalankan, lalu dihapus dari stack.
+
+====================================
