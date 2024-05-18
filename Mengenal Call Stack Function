@@ -1,51 +1,79 @@
-Latihan Request Pakai Callback Function
+Latihan Request Pakai Promise
 
-=================================================
+===================================
 
-buat app .js panggil nya pake node app.js
+contoh 1 : 
 
-// Fungsi untuk melakukan request data
-function fetchData(callback) {
-	// Simulasi delay untuk request data
-	setTimeout(() => {
-	  const data = {
-		name: 'John Doe',
-		age: 30,
-		email: 'john.doe@example.com'
-	  };
+app.js
+
+// app.js
+
+// Fungsi untuk menyimulasikan pengambilan data
+function fetchData() {
+	return new Promise((resolve, reject) => {
+	  // Simulasi proses pengambilan data
+	  setTimeout(() => {
+		// Simulasi data yang diambil
+		const data = {
+		  name: 'John Doe',
+		  age: 30,
+		  email: 'john.doe@example.com'
+		};
   
-	  // Memanggil callback function dengan data yang diperoleh
-	  callback(data);
-	}, 2000); // Delay selama 2 detik
+		// Resolve Promise dengan data
+		resolve(data);
+	  }, 2000); // Jeda 2 detik untuk simulasi
+	});
   }
   
-  // Fungsi callback untuk menangani data yang diterima
-  function handleData(data) {
-	console.log('Data yang diterima:', data);
-  }
-  
-  // Memanggil fungsi fetchData dan memberikan handleData sebagai callback
-  console.log('Memulai request data...');
-  fetchData(handleData);
-  console.log('Request data sedang diproses...');
+  // Contoh penggunaan
+  fetchData()
+	.then(data => {
+	  console.log('Data retrieved:', data);
+	})
+	.catch(error => {
+	  console.error('Error:', error.message);
+	});
 
 ===========================================================
 
-1. console.log('Memulai request data...');
-Baris ini akan dijalankan terlebih dahulu, dan akan menampilkan pesan "Memulai request data..." di konsol.
+contoh ke 2 : 
 
-2. fetchData(handleData);
-Fungsi fetchData() dipanggil dengan handleData sebagai callback function.
-Pada saat fetchData() dipanggil, proses request data dimulai.
-Namun, karena fetchData() menggunakan setTimeout() untuk menunda eksekusi selama 2 detik, fungsi fetchData() tidak akan selesai dengan segera.
+// app.js
 
-3. console.log('Request data sedang diproses...');
+// Fungsi sederhana untuk menjumlahkan dua angka
+function addNumbers(a, b) {
+	return new Promise((resolve, reject) => {
+	  // Lakukan operasi penjumlahan
+	  const result = a + b;
+  
+	  // Jika hasil negatif, reject Promise
+	  if (result < 0) {
+		reject(new Error('Result is negative'));
+	  } else {
+		// Jika hasil positif, resolve Promise dengan hasil
+		resolve(result);
+	  }
+	});
+  }
+  
+  // Contoh penggunaan
+  addNumbers(10, 20)
+	.then(result => {
+	  console.log('Sum:', result); // Output: Sum: 30
+	})
+	.catch(error => {
+	  console.error('Error:', error.message);
+	});
+  
+  addNumbers(-5, 3)
+	.then(result => {
+	  console.log('Sum:', result);
+	})
+	.catch(error => {
+	  console.error('Error:', error.message); // Output: Error: Result is negative
+	});
 
-4. Setelah fetchData() dipanggil, baris ini akan dijalankan dan akan menampilkan pesan "Request data sedang diproses..." di konsol.
-Setelah 2 detik (delay yang ditetapkan dalam setTimeout()), proses request data selesai.
-Pada saat ini, callback(data) di dalam fetchData() akan dipanggil.
-Callback function handleData(data) yang diberikan saat memanggil fetchData() akan dijalankan.
-Di dalam handleData(data), data yang diterima akan ditampilkan di konsol dengan pesan "Data yang diterima: { name: 'John Doe', age: 30, email: 'john.doe@example.com' }".
 
 
-======================================================
+===================================================
