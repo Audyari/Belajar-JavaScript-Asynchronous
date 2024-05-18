@@ -1,82 +1,37 @@
-Faktanya Javascript Itu Single Thread
+Callback Hell Di Javascript Bikin Serem Dibacanya
 
-==============================================
+=====================================================
 
-Secara sederhana, single-thread dalam konteks pemrograman berarti bahwa program hanya memiliki satu alur eksekusi (thread) pada waktu tertentu.
+contoh code serhana :
 
-1. Contoh menggunakan Callback:
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ubah Warna Body Otomatis</title>
+    <style>
+      body {
+        transition: background-color 0.5s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Warna latar belakang akan berubah setiap 3 detik</h1>
 
-// Fungsi simulasi operasi asinkron
-function fetchData(callback) {
-	setTimeout(() => {
-	  const data = { id: 1, name: 'John Doe' };
-	  callback(data);
-	}, 2000);
-  }
-  
-  // Pemanggilan fungsi asinkron
-  console.log('Memulai pengambilan data...');
-  fetchData((data) => {
-	console.log('Data yang diterima:', data);
-  });
-  console.log('Selesai pemanggilan fungsi');
+    <script>
+      function changeBodyColor() {
+        const randomColor =
+          "#" + Math.floor(Math.random() * 16777215).toString(16);
+        document.body.style.backgroundColor = randomColor;
+        console.log("Warna latar belakang diubah menjadi:", randomColor);
+      }
 
-===========================================================
-
-Contoh menggunakan Promise:
-
-// Fungsi simulasi operasi asinkron
-function fetchData() {
-	return new Promise((resolve, reject) => {
-	  setTimeout(() => {
-		const data = { id: 1, name: 'John Doe' };
-		resolve(data);
-	  }, 2000);
-	});
-  }
-  
-  // Pemanggilan fungsi asinkron
-  console.log('Memulai pengambilan data...');
-  fetchData()
-	.then((data) => {
-	  console.log('Data yang diterima:', data);
-	})
-	.catch((error) => {
-	  console.error('Terjadi kesalahan:', error);
-	})
-	.finally(() => {
-	  console.log('Selesai pemanggilan fungsi');
-	});
-
-============================================================
-
-Contoh menggunakan Async/Await:
-
-// Fungsi simulasi operasi asinkron
-function fetchData() {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const data = { id: 1, name: 'John Doe' };
-      resolve(data);
-    }, 2000);
-  });
-}
-
-// Fungsi asinkron menggunakan Async/Await
-async function processData() {
-  console.log('Memulai pengambilan data...');
-  try {
-    const data = await fetchData();
-    console.log('Data yang diterima:', data);
-  } catch (error) {
-    console.error('Terjadi kesalahan:', error);
-  } finally {
-    console.log('Selesai pemanggilan fungsi');
-  }
-}
-
-processData();
+      // Mengubah warna latar belakang setiap 3 detik
+      setInterval(changeBodyColor, 3000);
+    </script>
+  </body>
+</html>
 
 
-==========================================================
-
+=========================================================
