@@ -1,79 +1,145 @@
-Latihan Request Pakai Promise
+Cara Benar Menggunakan Fungsi Promise
 
-===================================
+===========================================
 
-contoh 1 : 
+1. Buat Promise:
 
-app.js
+const myPromise = new Promise((resolve, reject) => {
+  // Lakukan operasi asinkron di sini
+  // Jika berhasil, panggil resolve(value)
+  // Jika gagal, panggil reject(error)
+});
 
-// app.js
+======================================
 
-// Fungsi untuk menyimulasikan pengambilan data
-function fetchData() {
-	return new Promise((resolve, reject) => {
-	  // Simulasi proses pengambilan data
-	  setTimeout(() => {
-		// Simulasi data yang diambil
-		const data = {
-		  name: 'John Doe',
-		  age: 30,
-		  email: 'john.doe@example.com'
-		};
-  
-		// Resolve Promise dengan data
-		resolve(data);
-	  }, 2000); // Jeda 2 detik untuk simulasi
-	});
-  }
-  
-  // Contoh penggunaan
-  fetchData()
-	.then(data => {
-	  console.log('Data retrieved:', data);
-	})
-	.catch(error => {
-	  console.error('Error:', error.message);
-	});
+2. Konsumsi Promise :
+
+	* Gunakan .then() untuk menangani hasil sukses:
+
+myPromise.then((value) => {
+  // Lakukan sesuatu dengan nilai yang diberikan
+  console.log(value);
+});
+
+	* Gunakan .catch() untuk menangani kesalahan:
+
+myPromise.catch((error) => {
+  // Tangani error yang terjadi
+  console.error(error);
+});
+
+	* Opsi .finally() dapat digunakan untuk menjalankan kode setelah Promise selesai, baik berhasil maupun gagal:
+
+myPromise.finally(() => {
+  // Kode yang akan dijalankan setelah Promise selesai
+  console.log('Promise telah selesai');
+});
+
+=================================================
+
+Chaining Promise:
+
+	* Anda dapat menghubungkan beberapa Promise menggunakan .then() secara bertahap:
+
+myPromise
+  .then((value1) => {
+    // Lakukan sesuatu dengan nilai1
+    return value1 * 2;
+  })
+  .then((value2) => {
+    // Lakukan sesuatu dengan nilai2
+    console.log(value2);
+  })
+  .catch((error) => {
+    // Tangani error yang terjadi di salah satu tahap
+    console.error(error);
+  });
+
 
 ===========================================================
 
+cara lain dengan Async/Await :
+
+	* Untuk membuat kode yang menggunakan Promise terlihat lebih sederhana, Anda dapat menggunakan sintaks Async/Await:
+
+async function fetchData() {
+  try {
+    const value = await myPromise;
+    // Lakukan sesuatu dengan nilai yang diperoleh
+    console.log(value);
+  } catch (error) {
+    // Tangani error yang terjadi
+    console.error(error);
+  }
+}
+
+fetchData();
+
+
+==============================================
+
+berikut contoh kode nya 1 standard, satu dengan async :
+
+// Fungsi untuk mengambil data dari API
+function fetchData() {
+  return new Promise((resolve, reject) => {
+    // Simulasi pengambilan data dari API
+    setTimeout(() => {
+      const data = "hahahi";
+      //const data = { id: 1, name: 'John Doe', email: 'john.doe@example.com' };
+      if (data) {
+        resolve(data); // Panggil resolve() jika berhasil
+      } else {
+        reject(new Error('Failed to fetch data')); // Panggil reject() jika gagal
+      }
+    }, 2000); // Simulasi waktu tunggu 2 detik
+  });
+}
+
+// Konsumsi Promise dengan .then() dan .catch()
+fetchData()
+  .then((data) => {
+    // Lakukan sesuatu dengan data yang diperoleh
+    console.log('Data fetched:', data);
+  })
+  .catch((error) => {
+    // Tangani error yang terjadi
+    console.error('Error:', error.message);
+  })
+  .finally(() => {
+    // Lakukan sesuatu setelah Promise selesai, baik berhasil maupun gagal
+    console.log('Fetch data completed');
+  });
+
+=================================================================
+
 contoh ke 2 : 
 
-// app.js
+// promise1.js
 
-// Fungsi sederhana untuk menjumlahkan dua angka
-function addNumbers(a, b) {
-	return new Promise((resolve, reject) => {
-	  // Lakukan operasi penjumlahan
-	  const result = a + b;
-  
-	  // Jika hasil negatif, reject Promise
-	  if (result < 0) {
-		reject(new Error('Result is negative'));
-	  } else {
-		// Jika hasil positif, resolve Promise dengan hasil
-		resolve(result);
-	  }
-	});
+// Fungsi yang mengembalikan promise
+function getDataFromAPI() {
+  return new Promise((resolve, reject) => {
+    // Simulasi pengambilan data dari API
+    setTimeout(() => {
+      const data = { name: 'John Doe', age: 30 };
+      resolve(data);
+    }, 2000);
+  });
+}
+
+// Fungsi asynchronous menggunakan async/await
+async function fetchData() {
+  try {
+    console.log('Fetching data...');
+    const data = await getDataFromAPI();
+    console.log('Data received:', data);
+  } catch (error) {
+    console.error('Error:', error);
   }
-  
-  // Contoh penggunaan
-  addNumbers(10, 20)
-	.then(result => {
-	  console.log('Sum:', result); // Output: Sum: 30
-	})
-	.catch(error => {
-	  console.error('Error:', error.message);
-	});
-  
-  addNumbers(-5, 3)
-	.then(result => {
-	  console.log('Sum:', result);
-	})
-	.catch(error => {
-	  console.error('Error:', error.message); // Output: Error: Result is negative
-	});
+}
 
+// Memanggil fungsi asynchronous
+fetchData();
 
-
-===================================================
+======================================================
