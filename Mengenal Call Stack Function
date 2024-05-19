@@ -1,34 +1,35 @@
-Fungsi Await Keyword
+Mengelola Kondisi Error Dengan Async Await
 
-==========================
+==============================================
 
-Keyword await hanya dapat digunakan di dalam fungsi yang telah dideklarasikan dengan async. await digunakan 
-untuk menunggu sebuah Promise selesai sebelum melanjutkan eksekusi kode.
+contoh code nya : 
 
-contoh code nya :
-
-
-// await-example.js
+// error-handling-async-await.js
 
 // Fungsi yang mengembalikan Promise
 function getDataFromAPI() {
   return new Promise((resolve, reject) => {
     // Simulasi pengambilan data dari API
     setTimeout(() => {
-      const data = { name: 'John Doe', age: 30 };
-      resolve(data);
+      // Simulasi error
+      if (Math.random() < 0.5) {
+        const data = { name: 'John Doe', age: 30 };
+        resolve(data);
+      } else {
+        reject(new Error('Failed to fetch data'));
+      }
     }, 2000);
   });
 }
 
-// Fungsi asynchronous menggunakan await
+// Fungsi asynchronous menggunakan try/catch
 async function fetchData() {
   try {
     console.log('Fetching data...');
     const data = await getDataFromAPI();
     console.log('Data received:', data);
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error:', error.message);
   }
 }
 
@@ -36,4 +37,4 @@ async function fetchData() {
 fetchData();
 
 
-===================================================
+=================================================
