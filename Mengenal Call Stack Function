@@ -1,76 +1,33 @@
-Cara Membuat Promise
+Fungsi Async Keyword
 
-=============================
 
-contoh sederhana promise :
+============================
 
-// promise2.js
+Keyword async digunakan untuk membuat sebuah fungsi menjadi asynchronous. Fungsi yang dideklarasikan dengan async akan selalu 
+mengembalikan sebuah Promise, bahkan jika di dalam fungsi tersebut tidak ada penggunaan Promise secara eksplisit.
 
-// Contoh 1: Promise sederhana
-function getDataFromAPI() {
-  return new Promise((resolve, reject) => {
-    // Simulasi pengambilan data dari API
-    setTimeout(() => {
-      const data = { name: 'John Doe', age: 30 };
-      resolve(data);
-    }, 2000);
-  });
+
+contoh sederhana : 
+
+// async-example.js
+
+// Fungsi biasa
+function getDataSync() {
+  return { name: 'Audy1', age: 30 };
 }
 
-// Memanfaatkan Promise
-getDataFromAPI()
-  .then((data) => {
-    console.log('Data received:', data);
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
-
-// Contoh 2: Promise dengan reject
-function divideBynumber(a, b) {
-  return new Promise((resolve, reject) => {
-    if (b === 0) {
-      reject(new Error('Cannot divide by zero'));
-    } else {
-      const result = a / b;
-      resolve(result);
-    }
-  });
+// Fungsi asynchronous
+async function getDataAsync() {
+  return { name: 'Audy2', age: 30 };
 }
 
-// Memanfaatkan Promise dengan reject
-divideBynumber(10, 0)
-  .then((result) => {
-    console.log('Result:', result);
-  })
-  .catch((error) => {
-    console.error('Error:', error.message);
-  });
+// Memanfaatkan fungsi biasa
+const syncData = getDataSync();
+console.log('Sync Data:', syncData);
 
-// Contoh 3: Promise dengan chaining
-function getRandomNumber() {
-  return new Promise((resolve) => {
-    const randomNumber = Math.floor(Math.random() * 10);
-    resolve(randomNumber);
-  });
-}
+// Memanfaatkan fungsi asynchronous
+getDataAsync().then((data) => {
+  console.log('Async Data:', data);
+});
 
-getRandomNumber()
-  .then((number) => {
-    console.log('Random number:', number);
-    return number * 2;
-  })
-  .then((doubledNumber) => {
-    console.log('Doubled number:', doubledNumber);
-    return doubledNumber * 3;
-  })
-  .then((tripledNumber) => {
-    console.log('Tripled number:', tripledNumber);
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
-
-
-
-================================================
+===============================================
