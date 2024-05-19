@@ -1,123 +1,12 @@
-Cara Benar Menggunakan Fungsi Promise
+Cara Membuat Promise
 
-===========================================
+=============================
 
-1. Buat Promise:
+contoh sederhana promise :
 
-const myPromise = new Promise((resolve, reject) => {
-  // Lakukan operasi asinkron di sini
-  // Jika berhasil, panggil resolve(value)
-  // Jika gagal, panggil reject(error)
-});
+// promise2.js
 
-======================================
-
-2. Konsumsi Promise :
-
-	* Gunakan .then() untuk menangani hasil sukses:
-
-myPromise.then((value) => {
-  // Lakukan sesuatu dengan nilai yang diberikan
-  console.log(value);
-});
-
-	* Gunakan .catch() untuk menangani kesalahan:
-
-myPromise.catch((error) => {
-  // Tangani error yang terjadi
-  console.error(error);
-});
-
-	* Opsi .finally() dapat digunakan untuk menjalankan kode setelah Promise selesai, baik berhasil maupun gagal:
-
-myPromise.finally(() => {
-  // Kode yang akan dijalankan setelah Promise selesai
-  console.log('Promise telah selesai');
-});
-
-=================================================
-
-Chaining Promise:
-
-	* Anda dapat menghubungkan beberapa Promise menggunakan .then() secara bertahap:
-
-myPromise
-  .then((value1) => {
-    // Lakukan sesuatu dengan nilai1
-    return value1 * 2;
-  })
-  .then((value2) => {
-    // Lakukan sesuatu dengan nilai2
-    console.log(value2);
-  })
-  .catch((error) => {
-    // Tangani error yang terjadi di salah satu tahap
-    console.error(error);
-  });
-
-
-===========================================================
-
-cara lain dengan Async/Await :
-
-	* Untuk membuat kode yang menggunakan Promise terlihat lebih sederhana, Anda dapat menggunakan sintaks Async/Await:
-
-async function fetchData() {
-  try {
-    const value = await myPromise;
-    // Lakukan sesuatu dengan nilai yang diperoleh
-    console.log(value);
-  } catch (error) {
-    // Tangani error yang terjadi
-    console.error(error);
-  }
-}
-
-fetchData();
-
-
-==============================================
-
-berikut contoh kode nya 1 standard, satu dengan async :
-
-// Fungsi untuk mengambil data dari API
-function fetchData() {
-  return new Promise((resolve, reject) => {
-    // Simulasi pengambilan data dari API
-    setTimeout(() => {
-      const data = "hahahi";
-      //const data = { id: 1, name: 'John Doe', email: 'john.doe@example.com' };
-      if (data) {
-        resolve(data); // Panggil resolve() jika berhasil
-      } else {
-        reject(new Error('Failed to fetch data')); // Panggil reject() jika gagal
-      }
-    }, 2000); // Simulasi waktu tunggu 2 detik
-  });
-}
-
-// Konsumsi Promise dengan .then() dan .catch()
-fetchData()
-  .then((data) => {
-    // Lakukan sesuatu dengan data yang diperoleh
-    console.log('Data fetched:', data);
-  })
-  .catch((error) => {
-    // Tangani error yang terjadi
-    console.error('Error:', error.message);
-  })
-  .finally(() => {
-    // Lakukan sesuatu setelah Promise selesai, baik berhasil maupun gagal
-    console.log('Fetch data completed');
-  });
-
-=================================================================
-
-contoh ke 2 : 
-
-// promise1.js
-
-// Fungsi yang mengembalikan promise
+// Contoh 1: Promise sederhana
 function getDataFromAPI() {
   return new Promise((resolve, reject) => {
     // Simulasi pengambilan data dari API
@@ -128,18 +17,60 @@ function getDataFromAPI() {
   });
 }
 
-// Fungsi asynchronous menggunakan async/await
-async function fetchData() {
-  try {
-    console.log('Fetching data...');
-    const data = await getDataFromAPI();
+// Memanfaatkan Promise
+getDataFromAPI()
+  .then((data) => {
     console.log('Data received:', data);
-  } catch (error) {
+  })
+  .catch((error) => {
     console.error('Error:', error);
-  }
+  });
+
+// Contoh 2: Promise dengan reject
+function divideBynumber(a, b) {
+  return new Promise((resolve, reject) => {
+    if (b === 0) {
+      reject(new Error('Cannot divide by zero'));
+    } else {
+      const result = a / b;
+      resolve(result);
+    }
+  });
 }
 
-// Memanggil fungsi asynchronous
-fetchData();
+// Memanfaatkan Promise dengan reject
+divideBynumber(10, 0)
+  .then((result) => {
+    console.log('Result:', result);
+  })
+  .catch((error) => {
+    console.error('Error:', error.message);
+  });
 
-======================================================
+// Contoh 3: Promise dengan chaining
+function getRandomNumber() {
+  return new Promise((resolve) => {
+    const randomNumber = Math.floor(Math.random() * 10);
+    resolve(randomNumber);
+  });
+}
+
+getRandomNumber()
+  .then((number) => {
+    console.log('Random number:', number);
+    return number * 2;
+  })
+  .then((doubledNumber) => {
+    console.log('Doubled number:', doubledNumber);
+    return doubledNumber * 3;
+  })
+  .then((tripledNumber) => {
+    console.log('Tripled number:', tripledNumber);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+
+
+
+================================================
