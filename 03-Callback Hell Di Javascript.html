@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Callback Hell di Javascript</title>
+</head>
+<body>
+    <h1>Warna berubah menjadi merah</h1>
+
+    <script>
+        setTimeout(() => {
+            document.body.style.backgroundColor = 'red';
+        }, 1000);
+
+        setTimeout(() => {
+            document.body.style.backgroundColor = 'green';
+        }, 2000);
+
+        setTimeout(() => {
+            document.body.style.backgroundColor = 'blue';
+        }, 3000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asynchronous JavaScript</title>
+</head>
+<body>
+  <script>
+  
+    const hello = async () => {
+      // throw 'Maaf gak kenal';
+      return 'Hello World';
+    };
+
+    hello()
+      .then((res) => {
+        console.log('response', res);
+      })
+      .catch((err) => {
+        console.log('error', err);
+      });
+
+    const pythagoras = (a, b, c) => {
+      const result = (a ** 2) + (b ** 2) === (c ** 2);
+      console.log(`Apakah ${a}, ${b}, ${c} membentuk segitiga siku-siku? ${result ? 'Ya' : 'Tidak'}`);
+    };
+
+    pythagoras(3, 4, 5);
+
+    
+
+  </script>
+</body>
+</html>
