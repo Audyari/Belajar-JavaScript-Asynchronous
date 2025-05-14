@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<h1>Ubah Warna</h1>
+	<script>
+		const delayColorChange = (color, delay) =>
+			new Promise((resolve, reject) => {
+				setTimeout(() => {
+					document.body.style.backgroundColor = color;
+					resolve();
+				}, delay);
+			});
+
+		async function changeColor() {
+			await delayColorChange('red', 1000);
+			await delayColorChange('green', 1000);
+			await delayColorChange('blue', 1000);
+			await delayColorChange('yellow', 1000);
+			await delayColorChange('orange', 1000);
+			await delayColorChange('purple', 1000);
+			await delayColorChange('pink', 1000);
+			await delayColorChange('black', 1000);
+			await delayColorChange('white', 1000);
+			await delayColorChange('gray', 1000);
+			await delayColorChange('brown', 1000);
+			await delayColorChange('blue', 1000);
+			await delayColorChange('green', 1000);
+			await delayColorChange('red', 1000);
+			return 'Selesai';
+		}
+
+		async function printRainbow() {
+			await changeColor();
+			console.log('All Done! Dari printRainbow');
+			return 'Rainbow Done';
+		}
+
+		printRainbow().then((res) => {
+			alert(res);
+		});
+	</script>
+</body>
+</html>

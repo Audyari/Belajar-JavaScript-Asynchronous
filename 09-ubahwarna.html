@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ubah Warna</title>
+</head>
+<body>
+    <h1>Ubah Warna</h1>
+
+    <script>
+      
+      const delayColorChange = (color, delay) =>
+            new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    document.body.style.backgroundColor = color;
+                    resolve();
+                }, delay);
+            });
+
+   
+            delayColorChange('red', 1000)
+            .then(() => delayColorChange('green', 1000))
+            .then(() => delayColorChange('blue', 1000));
+    </script>
+</body>
+</html>
